@@ -4,10 +4,10 @@
 	<title>Web Query Page</title>
 	<style>
 		table{
-			width:80%;
+			width: 100%;
 		}
 		table, th, td{
-			border: 2px solid back;
+			border: 2px solid black;
 			border-collapse: collapse;
 		}
 		th,td{
@@ -32,8 +32,8 @@
 	<h1>CS143 Web Query</h1>
 	<p>Type an SQL query in the following box:</p>
 	<p>
-		<FORM METHOD = "POST" ACTION = "<?php $_PHP_SELF?>">
-			<TEXTAREA NAME="sqlQuery" ROWS=5 COLS=30></TEXTAREA>
+		<FORM METHOD = "GET" ACTION = "<?php $_PHP_SELF?>">
+			<TEXTAREA NAME="query" ROWS=5 COLS=30></TEXTAREA>
 			<INPUT TYPE="submit" VALUE="SUBMIT">
 		</FORM>
 	</p>
@@ -46,10 +46,11 @@
 			exit(1);
 		}
 		mysql_select_db("CS143", $db_connection);
-		$query = $_POST["sqlQuery"];
+		$query = $_GET["query"];
 		if($query){
-			$rs = mysql_query($query, $db_connection);# or die(mysql_error());
-			print "Results of query are listed as below.<br />";
+			$rs = mysql_query($query, $db_connection) or die(mysql_error());
+
+			print "Results of query are listed as below.<br/>";
 
 			# Storing received data
 			$result = array();
@@ -64,7 +65,7 @@
 
 			#print results
 			if(count($result) > 0){
-				echo "<table border='0.5'>";
+				echo "<table>";
 			 	echo "<tr>";
 			 	for ($i = 0; $i < count($result); $i++) {
 			 		echo "<th>" . $result[$i] . "</th>";
@@ -81,9 +82,7 @@
 				echo "</table>";
 			}
 		}
-		mysql_close($db_connection);
-		
-		
+		mysql_close($db_connection);	
 	?>
 
 	
