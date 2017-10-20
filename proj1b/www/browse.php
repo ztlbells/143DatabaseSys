@@ -12,14 +12,14 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
-	      <li class="nav-item active">
-	        <a class="nav-link" href="/homepage.php">Home <span class="sr-only">(current)</span></a>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/homepage.php">Home</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="/update.php">Update</a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/browse.php">Browse</a>
+	      <li class="nav-item  active">
+	        <a class="nav-link" href="/browse.php">Browse<span class="sr-only">(current)</span></a>
 	      </li>
 	    </ul>
 	  </div>
@@ -27,7 +27,15 @@
 
 </head>
 <body>
-	<p>add an actor</p>
+
+	<ul class="nav nav-tabs flex-column">
+	  <li class="nav-item">
+	    <a class="nav-link active" href="./actor_info.php">Actors</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="./movie_info.php">Movies</a>
+	  </li>
+	</ul>
 
 	<?php
 			
