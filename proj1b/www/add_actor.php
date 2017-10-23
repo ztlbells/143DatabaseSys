@@ -102,28 +102,35 @@
 		$firstName = $_GET["firstname"];
 		$lastName = $_GET["lastname"];
 		$Gender = $_GET["Gender"];
-		if ($Gender == 1){
-			$gender = "Male";
-		}
-		elseif ($Gender == 2){
-			$gender = "Female";
-		} 
-		$dateOfBirth = $_GET["dateofbirth"];
-		$dateOfDeath = $_GET["dateofdeath"];
- 
-		$query_id = "SELECT id FROM MaxPersonID;";
-		$rs_id = mysql_query($query_id, $db_connection) or die(mysql_error());
-		$id = mysql_fetch_row($rs_id)[0] + 1;
-		$query_add_id = "UPDATE MaxPersonID SET id = id + 1;";
-		$rs_add_id = mysql_query($query_add_id, $db_connection) or die(mysql_error());
-		if($dateOfDeath){
-			$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."','".$dateOfDeath."');";
-		}
-		else{
-			$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."',NULL);";
-		]
-		$rs = mysql_query($query, $db_connection) or die(mysql_error());
-		echo "Add Succesfully!"
+		if($firstName){
+			if ($Gender == 1){
+				$gender = "Male";
+			}
+			elseif ($Gender == 2){
+				$gender = "Female";
+			} 
+			$dateOfBirth = $_GET["dateofbirth"];
+			$dateOfDeath = $_GET["dateofdeath"];
+	 
+			$query_id = "SELECT id FROM MaxPersonID;";
+			
+			
+			$rs_id = mysql_query($query_id, $db_connection) or die(mysql_error());
+			$id = mysql_fetch_row($rs_id)[0] + 1;
+			$query_add_id = "UPDATE MaxPersonID SET id = id + 1;";
+			$rs_add_id = mysql_query($query_add_id, $db_connection) or die(mysql_error());
+			
+			if($dateOfDeath){
+				$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."','".$dateOfDeath."');";
+			}
+			else{
+				$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."',NULL);";
+			}
+			
+			$rs = mysql_query($query, $db_connection) or die(mysql_error());
+			echo "Add Succesfully!";
+			mysql_close($db_connection);
+		}	
 	?>
 
 	
