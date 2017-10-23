@@ -121,9 +121,10 @@
 		}
 		else{
 			$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."',NULL);";
-		]
+		}
 		$rs = mysql_query($query, $db_connection) or die(mysql_error());
-		echo "Add Succesfully!"
+		# echo "Add Succesfully!"
+		mysql_close($db_connection);	
 	?>
 
 	
