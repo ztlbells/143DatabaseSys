@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<title>Movie Database Query System - Add an Actor </title>
+	<title>Movie Database Query System - Add an A/M Relat </title>
 	<style>	
 	.form-horizontal{
 	    display:block;
@@ -19,7 +17,7 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
-	      <li class="nav-item ">
+	      <li class="nav-item">
 	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item active">
@@ -38,51 +36,27 @@
 </head>
 <body>
 	<p></br></p>
-	<form method="GET" action="<?php $_PHP_SELF?>">
+	<form>
 		<div class="form form-horizontal">
-		<h1>Add an Actor</h1>
-		<div class="row">
-		    <div class="col">
-		       <div class="form-group">
-			    <label for="actorfirstname">First Name</label>
-			    <input type="text" class="form-control" id="firstname" name="firstname"aria-describedby=" nametip" placeholder="Enter first name">
-			    <small id="nametip" class="form-text text-muted">Case sensitive.</small>
-			  </div>
-		    </div>
-		    <div class="col">
-		      <div class="form-group">
-			    <label for="actorlastname">Last Name</label>
-			    <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby=" nametip" placeholder="Enter last name">
-			    <small id="nametip" class="form-text text-muted">Case sensitive.</small>
-			  </div>
-		    </div>
-		 </div>
-	
-		<p></br></p>
-		<div class="form-group d-flex flex-column">
-			<label for id = "Gender" class="control-label">Gender</label>
-			 <select id = "Gender" name="Gender" class="custom-select">
-			  <option value="1">Male</option>
-			  <option value="2">Female</option>
-			</select>
-		</div>
+		<h1>Add an Actor to a Movie</h1>
 
-		<p></br></p>
-		<div class="row">
-		    <div class="col">
-		       <div class="form-group">
-			    <label for="dateofbirth">Date of Birth</label>
-			    <input type="text" class="form-control" id="dateofbirth" name="dateofbirth" aria-describedby="brithtip" placeholder="Format:YYYY-MM-DD">
-			  </div>
-		    </div>
-		    <div class="col">
-		      <div class="form-group">
-			    <label for="dateofdie">Date of Death</label>
-			    <input type="text" class="form-control" id="dateofdeath" name="dateofdeath" aria-describedby="dietip" placeholder="Format:YYYY-MM-DD">
-			    <small id="dietip" class="form-text text-muted">Leave it blank if the actor is still alive.</small>
-			  </div>
-		    </div>
-		 </div>
+		<div class="form-group">
+			<label for id = "movietitle" class="control-label">Movie Title</label>
+			 <input type="text" id = "movietitle" name="movietitle" class="form-control">
+		</div>
+	
+		<div class="form-group">
+			<label for id = "actor" class="control-label">Actor</label>
+			<input type="text" id = "actor" name="actor" class="form-control" aria-describedby="nametip">
+			<small id="nametip" class="form-text text-muted">Actor's name, e.g. Hank(First Name) Aaron(Last Name).</small>
+		</div>
+		
+		<div class="form-group">
+		    <label for="role">Role</label>
+		    <input type="text" class="form-control" id="role" name="role" aria-describedby="roletip">
+		    <small id="roletip" class="form-text text-muted">Actor's role in the movie.</small>
+		  </div>
+
 
 	  	<div class="form-group">
 	  		<button type="submit" class="btn btn-primary">Submit</button>
@@ -99,35 +73,38 @@
 			exit(1);
 		}
 		mysql_select_db("CS143", $db_connection);
-		$firstName = $_GET["firstname"];
-		$lastName = $_GET["lastname"];
-		$Gender = $_GET["Gender"];
-		if ($Gender == 1){
-			$gender = "Male";
+		
+		$movieTitle=$_GET["movietitle"];
+		$actor=$_GET["actor"];
+		$role=$_GET["role"];
+		
+		if($movieTitle && $actor){
+			$query_mid="SELECT id FROM Movie WHERE title='".$movieTitle."';";
+			$rs_query_mid=mysql_query($query_mid, $db_connection) or die(mysql_error());
+			if(mysql_num_rows($rs_query_mid)==0){
+				echo "Please input the correct movie title";
+			}
+			else{
+				$mid=mysql_fetch_row($rs_query_mid)[0];
+				
+				$list=preg_split('/\s+/',$actor);
+				$firstName=$list[0];
+				$lastName=$list[1];
+				$query_aid="SELECT id FROM Actor WHERE first='".$firstName."' AND last='".$lastName."';";
+				$rs_query_aid=mysql_query($query_aid, $db_connection) or die(mysql_error());
+				if(mysql_num_rows($rs_query_aid)==0){
+					echo "Please input the correct actor name";
+				}
+				else{
+					$aid=mysql_fetch_row($rs_query_aid)[0];
+					$query="INSERT INTO MovieActor VALUES(".$mid.",".$aid.",'".$role."');";
+					$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
+					echo "Add Succesfully";
+				}
+			}
 		}
-		elseif ($Gender == 2){
-			$gender = "Female";
-		} 
-		$dateOfBirth = $_GET["dateofbirth"];
-		$dateOfDeath = $_GET["dateofdeath"];
- 
-		$query_id = "SELECT id FROM MaxPersonID;";
-		$rs_id = mysql_query($query_id, $db_connection) or die(mysql_error());
-		$id = mysql_fetch_row($rs_id)[0] + 1;
-		$query_add_id = "UPDATE MaxPersonID SET id = id + 1;";
-		$rs_add_id = mysql_query($query_add_id, $db_connection) or die(mysql_error());
-		if($dateOfDeath){
-			$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."','".$dateOfDeath."');";
-		}
-		else{
-			$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."',NULL);";
-		}
-		$rs = mysql_query($query, $db_connection) or die(mysql_error());
-		# echo "Add Succesfully!"
-		mysql_close($db_connection);	
 	?>
 
 	
 </body>
 </html>
-
