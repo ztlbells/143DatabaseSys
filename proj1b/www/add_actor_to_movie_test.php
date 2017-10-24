@@ -40,10 +40,16 @@
 		<div class="form form-horizontal">
 		<h1>Add an Actor to a Movie</h1>
 	
+		<!--
+		<div class="form-group">
+			<label for id = "movietitle" class="control-label">Movie Title</label>
+			 <input type="text" id = "movietitle" name="movietitle" class="form-control">
+		</div> -->
 		
+				<!-- TODO: Options are returned from sql, Lexicographical order??-->
 		<div class="form-group d-flex flex-column">
 			<label for id = "movietitle" class="control-label">Movie Title</label>
-			 <select id = "movietitle" name="movietitle" class="custom-select">
+			 <select id = "movietitle" name="movetitle" class="custom-select">
 			 <?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -52,46 +58,21 @@
 						exit(1);
 					}
 					mysql_select_db("CS143", $db_connection);
-					$query="SELECT title,year,id FROM Movie ORDER BY title ASC";
+					$query="SELECT DISTINCT title FROM Movie";
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
-					echo '<option value="0" selected="selected"> </option>';
+					echo '<option value="0"> </option>';
 					for($i=1;$i<=$row_number;$i++){
-						$title=mysql_fetch_row($rs)[0];
-						$year=mysql_fetch_row($rs)[1];
-						$id=mysql_fetch_row($rs)[2];
-						echo '<option value="'.$id.'">'.$title.' ('.$year.')'.'</option>';
+						echo '<option value="'.$i.'">'.mysql_fetch_row($rs)[0].'</option>';
 					}
-					mysql_close($db_connection); 
 			 ?>
 			 </select>
 		</div>
 	
-		<div class="form-group d-flex flex-column">
+		<div class="form-group">
 			<label for id = "actor" class="control-label">Actor</label>
-			 <select id = "actor" name="actor" class="custom-select">
-			 <?php
-					$db_connection = mysql_connect("localhost", "cs143", "");
-					if(!$db_connection){
-						$errmsg = mysql_error($db_connection);
-						echo "Connection failed: $errmsg <br/>";
-						exit(1);
-					}
-					mysql_select_db("CS143", $db_connection);
-					$query="SELECT first,last,dob,id FROM Actor ORDER BY last ASC";
-					$rs=mysql_query($query, $db_connection) or die(mysql_error());
-					$row_number=mysql_num_rows($rs);
-					echo '<option value="0" selected="selected"> </option>';
-					for($i=1;$i<=$row_number;$i++){
-						$first=mysql_fetch_row($rs)[0];
-						$last=mysql_fetch_row($rs)[1];
-						$dob=mysql_fetch_row($rs)[2];
-						$id=mysql_fetch_row($rs)[3];
-						echo '<option value="'.$id.'">'.$first.' '.$last.' ('.$dob.')'.'</option>';
-					}
-					mysql_close($db_connection); 
-			 ?>
-			 </select>
+			<input type="text" id = "actor" name="actor" class="form-control" aria-describedby="nametip">
+			<small id="nametip" class="form-text text-muted">Actor's name, e.g. Hank(First Name) Aaron(Last Name).</small>
 		</div>
 		
 		<div class="form-group">
@@ -109,6 +90,7 @@
 	</form>
 
 	<?php
+	/*
 		$db_connection = mysql_connect("localhost", "cs143", "");
 		if(!$db_connection){
 			$errmsg = mysql_error($db_connection);
@@ -117,16 +99,37 @@
 		}
 		mysql_select_db("CS143", $db_connection);
 		
-		$mid=$_GET["movietitle"];
-		$aid=$_GET["actor"];
+		$movieTitle=$_GET["movietitle"];
+		$actor=$_GET["actor"];
 		$role=$_GET["role"];
 		
-		if($mid && $aid){
-			$query="INSERT INTO MovieActor VALUES(".$mid.",".$aid.",'".$role."');";
-			$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
-			echo "Add Succesfully";
+		if($movieTitle && $actor){
+			$query_mid="SELECT id FROM Movie WHERE title='".$movieTitle."';";
+			$rs_query_mid=mysql_query($query_mid, $db_connection) or die(mysql_error());
+			if(mysql_num_rows($rs_query_mid)==0){
+				echo "Please input the correct movie title";
+			}
+			else{
+				$mid=mysql_fetch_row($rs_query_mid)[0];
+				
+				$list=preg_split('/\s+/',$actor);
+				$firstName=$list[0];
+				$lastName=$list[1];
+
+				$query_aid="SELECT id FROM Actor WHERE first='".$firstName."' AND last='".$lastName."';";
+				$rs_query_aid=mysql_query($query_aid, $db_connection) or die(mysql_error());
+				if(mysql_num_rows($rs_query_aid)==0){
+					echo "Please input the correct actor name";
+				}
+				else{
+					$aid=mysql_fetch_row($rs_query_aid)[0];
+					$query="INSERT INTO MovieActor VALUES(".$mid.",".$aid.",'".$role."');";
+					$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
+					echo "Add Succesfully";
+				}
+			}
 		}
-		mysql_close($db_connection); 
+	*/
 	?>
 
 	

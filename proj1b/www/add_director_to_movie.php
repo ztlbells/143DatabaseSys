@@ -40,14 +40,57 @@
 		<div class="form form-horizontal">
 		<h1>Add a Director to a Movie</h1>
 
-		<div class="form-group">
+		<div class="form-group d-flex flex-column">
 			<label for id = "movietitle" class="control-label">Movie Title</label>
-			 <input type="text" id = "movietitle" name="movietitle" class="form-control">
+			 <select id = "movietitle" name="movietitle" class="custom-select">
+			 <?php
+					$db_connection = mysql_connect("localhost", "cs143", "");
+					if(!$db_connection){
+						$errmsg = mysql_error($db_connection);
+						echo "Connection failed: $errmsg <br/>";
+						exit(1);
+					}
+					mysql_select_db("CS143", $db_connection);
+					$query="SELECT title,year,id FROM Movie ORDER BY title ASC";
+					$rs=mysql_query($query, $db_connection) or die(mysql_error());
+					$row_number=mysql_num_rows($rs);
+					echo '<option value="0" selected="selected"> </option>';
+					for($i=1;$i<=$row_number;$i++){
+						$title=mysql_fetch_row($rs)[0];
+						$year=mysql_fetch_row($rs)[1];
+						$id=mysql_fetch_row($rs)[2];
+						echo '<option value="'.$id.'">'.$title.' ('.$year.')'.'</option>';
+					}
+					mysql_close($db_connection); 
+			 ?>
+			 </select>
 		</div>
 
-		<div class="form-group">
-			<label for id = "movietitle" class="control-label">Director</label>
-			 <input type="text" id = "movietitle" name="director" class="form-control">
+		<div class="form-group d-flex flex-column">
+			<label for id = "director" class="control-label">Director</label>
+			 <select id = "director" name="director" class="custom-select">
+			 <?php
+					$db_connection = mysql_connect("localhost", "cs143", "");
+					if(!$db_connection){
+						$errmsg = mysql_error($db_connection);
+						echo "Connection failed: $errmsg <br/>";
+						exit(1);
+					}
+					mysql_select_db("CS143", $db_connection);
+					$query="SELECT first,last,dob,id FROM Director ORDER BY last ASC";
+					$rs=mysql_query($query, $db_connection) or die(mysql_error());
+					$row_number=mysql_num_rows($rs);
+					echo '<option value="0" selected="selected"> </option>';
+					for($i=1;$i<=$row_number;$i++){
+						$first=mysql_fetch_row($rs)[0];
+						$last=mysql_fetch_row($rs)[1];
+						$dob=mysql_fetch_row($rs)[2];
+						$id=mysql_fetch_row($rs)[3];
+						echo '<option value="'.$id.'">'.$first.' '.$last.' ('.$dob.')'.'</option>';
+					}
+					mysql_close($db_connection); 
+			 ?>
+			 </select>
 		</div>
 	
 
@@ -67,35 +110,16 @@
 		}
 		mysql_select_db("CS143", $db_connection);
 		
-		$movieTitle=$_GET["movietitle"];
-		$director=$_GET["director"];
+		$mid=$_GET["movietitle"];
+		$did=$_GET["director"];
 		
-		if($movieTitle && $director){
-			$query_mid="SELECT id FROM Movie WHERE title='".$movieTitle."';";
-			$rs_query_mid=mysql_query($query_mid, $db_connection) or die(mysql_error());
-			if(mysql_num_rows($rs_query_mid)==0){
-				echo "Please input the correct movie title";
-			}
-			else{
-				$mid=mysql_fetch_row($rs_query_mid)[0];
-				
-				$list=preg_split('/\s+/',$director);
-				$firstName=$list[0];
-				$lastName=$list[1];
-
-				$query_did="SELECT id FROM Director WHERE first='".$firstName."' AND last='".$lastName."';";
-				$rs_query_did=mysql_query($query_did, $db_connection) or die(mysql_error());
-				if(mysql_num_rows($rs_query_did)==0){
-					echo "Please input the correct actor name";
-				}
-				else{
-					$did=mysql_fetch_row($rs_query_did)[0];
-					$query="INSERT INTO MovieDirector VALUES(".$mid.",".$did.");";
-					$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
-					echo "Add Succesfully";
-				}
-			}
-		}			
+		if($mid && $did){
+			$query="INSERT INTO MovieDirector VALUES(".$mid.",".$did.");";
+			$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
+			echo "Add Succesfully";
+		}
+		
+		mysql_close($db_connection); 
 	?>
 
 	
