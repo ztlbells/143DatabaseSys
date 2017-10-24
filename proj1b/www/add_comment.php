@@ -17,17 +17,17 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
+	      </li>
 	      <li class="nav-item active">
-	        <a class="nav-link" href="/homepage.php">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="./update.php">Update</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/update.php">Update</a>
+	        <a class="nav-link" href="./browse.php">Browse</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/browse.php">Browse</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/search.php">Search</a>
+	        <a class="nav-link" href="./search.php">Search</a>
 	      </li>
 	    </ul>
 	  </div>
@@ -36,31 +36,27 @@
 </head>
 <body>
 	<p></br></p>
-	<form>
+	<form method="GET" action="<?php $_PHP_SELF?>">
 		<div class="form form-horizontal">
 		<h1>Add a comment</h1>
 
-		<!-- TODO: Options are returned from sql, Lexicographical order??-->
-		<div class="form-group d-flex flex-column">
+
+		<div class="form-group">
 			<label for id = "movietitle" class="control-label">Movie Title</label>
-			 <select id = "movietitle" class="custom-select">
-			  <option value="1"> Movie1 </option>
-			  <option value="2"> Movie2 </option>
-			  <option value="3"> ... </option>
-			</select>
+			 <input type="text" id = "movietitle" name="movietitle" class="form-control">
 		</div>
 
 		<div class="row">
 		    <div class="col">
 		       <div class="form-group">
-			    <label for="name">Your Name</label>
-			    <input type="text" class="form-control" id="name" placeholder="Guest">
+			    <label for id="name">Your Name</label>
+			    <input type="text" class="form-control" id="name" name="name" placeholder="Guest">
 			  </div>
 		    </div>
 		    <div class="col">
 		    	<div class="form-group d-flex flex-column">
 				     <label for id = "rating" class="control-label">Rating</label>
-					 <select id = "rating" class="custom-select">
+					 <select id = "rating" name="rating" class="custom-select">
 					  <option value="1"> 1 (Waste of time) </option>
 					  <option value="2"> 2 (Just so-so)</option>
 					  <option value="3"> 3 (Okay)</option>
@@ -70,8 +66,12 @@
 				</div>
 		    </div>
 		 </div>
-
-
+		
+		<label for id="comment" class="control-label">Comment</label>
+		<div>
+			<textarea id="comment" name="comment" rows=5 cols=40></textarea>
+		</div>
+		
 	  	<div class="form-group">
 	  		<button type="submit" class="btn btn-primary">Submit</button>
 	  	</div>
@@ -80,7 +80,39 @@
 	</form>
 
 	<?php
-			
+		$db_connection = mysql_connect("localhost", "cs143", "");
+		if(!$db_connection){
+			$errmsg = mysql_error($db_connection);
+			echo "Connection failed: $errmsg <br/>";
+			exit(1);
+		}
+		mysql_select_db("CS143", $db_connection);
+		
+		$movieTitle=$_GET["movietitle"];
+		$name=$_GET["name"];
+		$rating=$_GET["rating"];
+		$comment=$_GET["comment"];
+		$query_time="SELECT NOW();";
+		$rs_query_time=mysql_query($query_time, $db_connection) or die(mysql_error());
+		$time=mysql_fetch_row($rs_query_time)[0];
+
+
+		if($movieTitle){
+			$query_mid="SELECT id FROM Movie WHERE title='".$movieTitle."';";
+			$rs_query_mid=mysql_query($query_mid, $db_connection) or die(mysql_error());
+			if(mysql_num_rows($rs_query_mid)==0){
+				echo "Please input the correct movie title";
+			}
+			else{
+				$mid=mysql_fetch_row($rs_query_mid)[0];
+				
+				$query="INSERT INTO Review VALUES('".$name."','".$time."',".$mid.",".$rating.",'".$comment."');";
+				$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
+				echo "Add Succesfully";
+			}
+		}
+		
+		mysql_close($db_connection); 
 	?>
 
 	

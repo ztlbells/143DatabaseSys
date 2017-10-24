@@ -35,7 +35,7 @@
 </head>
 <body>
 	<p></br></p>
-	<form>
+	<form method="GET" action="<?php $_PHP_SELF?>">
 		<div class="form form-horizontal">
 		<h1>Add a Movie</h1>
 

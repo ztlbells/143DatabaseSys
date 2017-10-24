@@ -35,7 +35,7 @@
 
 </head>
 <body>
-	<form>
+	<form method="GET" action="<?php $_PHP_SELF?>">
 		<p></br></p>
 		<div class="form form-horizontal">
 		<h1>Add a Director</h1>
