@@ -62,7 +62,7 @@
 			<li class="nav-item"><h2>Movie Information Page</h2></li>
 		</ul >
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Movie Information is:</h4></li>
+			<li class="nav-item"><h4>Movie Information</h4></li>
 			<?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -98,7 +98,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actors in this Movie:</h4></li>
+			<li class="nav-item"><h4>Actors in this Movie</h4></li>
 			<?php
 				echo '<table>';
 				echo '<tr>';
@@ -124,7 +124,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>User Review:</h4></li>
+			<li class="nav-item"><h4>Reviews</h4></li>
 			<?php
 				if($movie){
 					$query = 'SELECT AVG(rating), COUNT(*) FROM Review WHERE mid ='. $movie. ';';
@@ -138,7 +138,21 @@
 						echo '</div>';
 					}
 					else{
-						echo '<li class="nav-item">Average score for this Movie is '.$score.'/5 based on '.$count.' people\'s reviews</li>';
+						if($score > 0 && $score <= 1){
+							echo '<li class="nav-item">Average score: <font color="#B0C4DE">'.number_format($score,1).'/5 - Waste of time</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 1 && $score <= 2){
+							echo '<li class="nav-item">Average score: <font color="#778899">'.number_format($score,1).'/5 - Just so-so</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 2 && $score <= 3){
+							echo '<li class="nav-item">Average score: <font color="#87CEFA">'.number_format($score,1).'/5 - Okay</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 3 && $score <= 4){
+							echo '<li class="nav-item">Average score: <font color="#9370DB">'.number_format($score,1).'/5 - Not bad</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 4 && $score <= 5){
+							echo '<li class="nav-item">Average score: <font color="#800080">'.number_format($score,1).'/5 - Awesome</font> ('.$count.' people reviewed)</li>';
+						}
 						echo '<div class="form-group">';
 						echo '<button type="submit" name="movie" class="btn btn-primary" value="'.$movie.'">Leave your score as well!</button>';
 						echo '</div>';
@@ -147,7 +161,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Comment details shown below :</h4></li>
+			<li class="nav-item"><h4>Comments:</h4></li>
 			<?php
 				if($movie){
 					$query = 'SELECT name, time, rating, comment FROM Review WHERE mid ='. $movie. ';';
@@ -159,7 +173,12 @@
 						$time=$row[1];
 						$rating=$row[2];
 						$comment=$row[3];
-						echo '<li class="nav-item"><font color="#FF0000">'.$name.'</font>'.' rates the this movie with score '. $rating. ' and left a review at '.$time.'</li>';
+						if(!$name){
+							echo '<li class="nav-item"><font color="#1E90FF"> Guest </font>'.' rates the this movie with score '. $rating. '/5 and left a review at '.$time.'</li>';
+						}
+						else{
+							echo '<li class="nav-item"><font color="#1E90FF">'.$name.'</font>'.' rates the this movie with score '. $rating. ' and left a review at '.$time.'</li>';
+						}
 						echo '<li class="nav-item">Comment:</li>';
 						echo '<li class="nav-item">'.$comment.'</li>';
 						echo '</br>';
