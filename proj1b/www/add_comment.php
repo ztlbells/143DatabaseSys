@@ -37,13 +37,49 @@
 <body>
 	<p></br></p>
 	<form method="GET" action="<?php $_PHP_SELF?>">
+		<input type="hidden" name="movie" value="<?php echo $_POST['movie']; ?>">
 		<div class="form form-horizontal">
 		<h1>Add a comment</h1>
 
 
-		<div class="form-group">
+		<div class="form-group d-flex flex-column">
 			<label for id = "movietitle" class="control-label">Movie Title</label>
-			 <input type="text" id = "movietitle" name="movietitle" class="form-control">
+			 <select id = "movietitle" name="movietitle" class="custom-select">
+			 <?php
+					$db_connection = mysql_connect("localhost", "cs143", "");
+					if(!$db_connection){
+						$errmsg = mysql_error($db_connection);
+						echo "Connection failed: $errmsg <br/>";
+						exit(1);
+					}
+					mysql_select_db("CS143", $db_connection);
+					$query="SELECT title,year,id FROM Movie ORDER BY title ASC";
+					$rs=mysql_query($query, $db_connection) or die(mysql_error());
+					$row_number=mysql_num_rows($rs);
+					
+					$movie = $_POST["movie"];
+					if($movie){
+						$query_show_first='SELECT title,year FROM Movie WHERE id='.$movie.';';
+						$rs_show_first=mysql_query($query_show_first, $db_connection) or die(mysql_error());
+						$row_show_first=mysql_fetch_row($rs_show_first);
+						$title_show_first=$row_show_first[0];
+						$year_show_first=$row_show_first[1];
+						echo '<option value="'.$movie.'" selected="selected">'.$title_show_first.' ('.$year_show_first.')'.'</option>';
+					}
+					else{
+						echo '<option value="0" selected="selected"> </option>';
+					}
+					
+					for($i=1;$i<=$row_number;$i++){
+						$row=mysql_fetch_row($rs);
+						$title=$row[0];
+						$year=$row[1];
+						$id=$row[2];
+						echo '<option value="'.$id.'">'.$title.' ('.$year.')'.'</option>';
+					}
+					mysql_close($db_connection); 
+			 ?>
+			 </select>
 		</div>
 
 		<div class="row">
@@ -88,28 +124,19 @@
 		}
 		mysql_select_db("CS143", $db_connection);
 		
-		$movieTitle=$_GET["movietitle"];
+		$mid=$_GET["movietitle"];
 		$name=$_GET["name"];
 		$rating=$_GET["rating"];
 		$comment=$_GET["comment"];
 		$query_time="SELECT NOW();";
 		$rs_query_time=mysql_query($query_time, $db_connection) or die(mysql_error());
 		$time=mysql_fetch_row($rs_query_time)[0];
-
-
-		if($movieTitle){
-			$query_mid="SELECT id FROM Movie WHERE title='".$movieTitle."';";
-			$rs_query_mid=mysql_query($query_mid, $db_connection) or die(mysql_error());
-			if(mysql_num_rows($rs_query_mid)==0){
-				echo "Please input the correct movie title";
-			}
-			else{
-				$mid=mysql_fetch_row($rs_query_mid)[0];
-				
-				$query="INSERT INTO Review VALUES('".$name."','".$time."',".$mid.",".$rating.",'".$comment."');";
-				$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
-				echo "Add Succesfully";
-			}
+		
+		
+		if($mid){
+			$query="INSERT INTO Review VALUES('".$name."','".$time."',".$mid.",".$rating.",'".$comment."');";
+			$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
+			echo "Add Succesfully";
 		}
 		
 		mysql_close($db_connection); 

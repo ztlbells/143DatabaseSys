@@ -12,17 +12,17 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="./update.php">Update</a>
+	      </li>
 	      <li class="nav-item active">
-	        <a class="nav-link" href="/homepage.php">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="./browse.php">Browse</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/update.php">Update</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/browse.php">Browse</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/search.php">Search</a>
+	        <a class="nav-link" href="./search.php">Search</a>
 	      </li>
 	    </ul>
 	  </div>
@@ -33,10 +33,10 @@
 
 	<ul class="nav nav-tabs flex-column">
 	  <li class="nav-item">
-	    <a class="nav-link active" href="./actor_info.php">Actors</a>
+	    <a class="nav-link active" href="./actor_browse.php">Actors</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="./movie_info.php">Movies</a>
+	    <a class="nav-link" href="./movie_browse.php">Movies</a>
 	  </li>
 	</ul>
 

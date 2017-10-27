@@ -57,9 +57,10 @@
 					$row_number=mysql_num_rows($rs);
 					echo '<option value="0" selected="selected"> </option>';
 					for($i=1;$i<=$row_number;$i++){
-						$title=mysql_fetch_row($rs)[0];
-						$year=mysql_fetch_row($rs)[1];
-						$id=mysql_fetch_row($rs)[2];
+						$row=mysql_fetch_row($rs);
+						$title=$row[0];
+						$year=$row[1];
+						$id=$row[2];
 						echo '<option value="'.$id.'">'.$title.' ('.$year.')'.'</option>';
 					}
 					mysql_close($db_connection); 
