@@ -2,12 +2,33 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<title>Movie Database Query System - Add an D/M Relat </title>
+	<title>Movie Database Query System - Browse Movies </title>
 	<style>	
 	.form-horizontal{
 	    display:block;
 	    width:50%;
 	    margin:0 auto;
+	}
+	table{
+		width: 100%;
+	}
+	table, th, td{
+		border: 2px grey;
+		border-collapse: collapse;
+	}
+	th,td{
+		padding: 5px;
+		text-align: left;
+	}
+	tr:nth-child(even){
+		background-color: #eee;
+	}
+	tr:nth-child(odd){
+		background-color: #fff;
+	}
+	th{
+		background-color:black;
+		color:white;
 	}
 	</style>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -17,13 +38,13 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
-	      <li class="nav-item active">
+	      <li class="nav-item">
 	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="./update.php">Update</a>
 	      </li>
-	      <li class="nav-item">
+	      <li class="nav-item active">
 	        <a class="nav-link" href="./browse.php">Browse</a>
 	      </li>
 	      <li class="nav-item">
@@ -36,13 +57,14 @@
 </head>
 <body>
 	<p></br></p>
-	<form>
+	<form method="post" action="movie_info.php">
 		<div class="form form-horizontal">
-		<h1>Add a Director to a Movie</h1>
+		<h1>Browse Movies</h1>
 
+		<!-- TODO: Options are returned from sql, Lexicographical order??-->
 		<div class="form-group d-flex flex-column">
-			<label for id = "movietitle" class="control-label">Movie Title</label>
-			 <select id = "movietitle" name="movietitle" class="custom-select">
+			<label for id = "movie" class="control-label">Select a Movie</label>
+			 <select id = "movie" name="movie" class="custom-select">
 			 <?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -64,36 +86,8 @@
 					}
 					mysql_close($db_connection); 
 			 ?>
-			 </select>
+			</select>
 		</div>
-
-		<div class="form-group d-flex flex-column">
-			<label for id = "director" class="control-label">Director</label>
-			 <select id = "director" name="director" class="custom-select">
-			 <?php
-					$db_connection = mysql_connect("localhost", "cs143", "");
-					if(!$db_connection){
-						$errmsg = mysql_error($db_connection);
-						echo "Connection failed: $errmsg <br/>";
-						exit(1);
-					}
-					mysql_select_db("CS143", $db_connection);
-					$query="SELECT first,last,dob,id FROM Director ORDER BY last ASC";
-					$rs=mysql_query($query, $db_connection) or die(mysql_error());
-					$row_number=mysql_num_rows($rs);
-					echo '<option value="0" selected="selected"> </option>';
-					for($i=1;$i<=$row_number;$i++){
-						$first=mysql_fetch_row($rs)[0];
-						$last=mysql_fetch_row($rs)[1];
-						$dob=mysql_fetch_row($rs)[2];
-						$id=mysql_fetch_row($rs)[3];
-						echo '<option value="'.$id.'">'.$first.' '.$last.' ('.$dob.')'.'</option>';
-					}
-					mysql_close($db_connection); 
-			 ?>
-			 </select>
-		</div>
-	
 
 	  	<div class="form-group">
 	  		<button type="submit" class="btn btn-primary">Submit</button>
@@ -103,24 +97,7 @@
 	</form>
 
 	<?php
-		$db_connection = mysql_connect("localhost", "cs143", "");
-		if(!$db_connection){
-			$errmsg = mysql_error($db_connection);
-			echo "Connection failed: $errmsg <br/>";
-			exit(1);
-		}
-		mysql_select_db("CS143", $db_connection);
-		
-		$mid=$_GET["movietitle"];
-		$did=$_GET["director"];
-		
-		if($mid && $did){
-			$query="INSERT INTO MovieDirector VALUES(".$mid.",".$did.");";
-			$rs_query=mysql_query($query, $db_connection) or die(mysql_error());
-			echo "Add Succesfully";
-		}
-		
-		mysql_close($db_connection); 
+			
 	?>
 
 	

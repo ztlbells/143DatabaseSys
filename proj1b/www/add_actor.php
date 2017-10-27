@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<title>Movie Database Query System - Add a Director </title>
+	<title>Movie Database Query System - Add an Actor </title>
 	<style>	
 	.form-horizontal{
 	    display:block;
@@ -17,7 +19,7 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
-	      <li class="nav-item">
+	      <li class="nav-item ">
 	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item active">
@@ -35,26 +37,28 @@
 
 </head>
 <body>
+	<p></br></p>
 	<form method="GET" action="<?php $_PHP_SELF?>">
-		<p></br></p>
 		<div class="form form-horizontal">
-		<h1>Add a Director</h1>
+		<h1>Add an Actor</h1>
 		<div class="row">
 		    <div class="col">
 		       <div class="form-group">
 			    <label for="actorfirstname">First Name</label>
-			    <input type="text" class="form-control" id="firstname" name="firstname" aria-describedby="nametip" placeholder="Enter first name">
+			    <input type="text" class="form-control" id="firstname" name="firstname"aria-describedby=" nametip" placeholder="Enter first name">
 			    <small id="nametip" class="form-text text-muted">Case sensitive.</small>
 			  </div>
 		    </div>
 		    <div class="col">
 		      <div class="form-group">
 			    <label for="actorlastname">Last Name</label>
-			    <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby="nametip" placeholder="Enter last name">
+			    <input type="text" class="form-control" id="lastname" name="lastname" aria-describedby=" nametip" placeholder="Enter last name">
 			    <small id="nametip" class="form-text text-muted">Case sensitive.</small>
 			  </div>
 		    </div>
 		 </div>
+	
+		<p></br></p>
 		<div class="form-group d-flex flex-column">
 			<label for id = "Gender" class="control-label">Gender</label>
 			 <select id = "Gender" name="Gender" class="custom-select">
@@ -63,6 +67,7 @@
 			</select>
 		</div>
 
+		<p></br></p>
 		<div class="row">
 		    <div class="col">
 		       <div class="form-group">
@@ -125,9 +130,10 @@
 			$rs = mysql_query($query, $db_connection) or die(mysql_error());
 			echo "Add Succesfully!";
 			mysql_close($db_connection);
-		}		
+		}	
 	?>
 
 	
 </body>
 </html>
+
