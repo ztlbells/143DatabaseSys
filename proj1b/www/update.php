@@ -12,17 +12,17 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
+	      </li>
 	      <li class="nav-item active">
-	        <a class="nav-link" href="/homepage.php">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="./update.php">Update</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/update.php">Update</a>
+	        <a class="nav-link" href="./browse.php">Browse</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/browse.php">Browse</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/search.php">Search</a>
+	        <a class="nav-link" href="./search.php">Search</a>
 	      </li>
 	    </ul>
 	  </div>
@@ -33,22 +33,22 @@
 
 	<ul class="nav nav-tabs flex-column">
 	  <li class="nav-item">
-	    <a class="nav-link active" href="/add_actor.php">Add an Actor</a>
+	    <a class="nav-link active" href="./add_actor.php">Add an Actor</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/add_director.php">Add a Director</a>
+	    <a class="nav-link" href="./add_director.php">Add a Director</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/add_movie.php">Add a Movie</a>
+	    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
+	    <a class="nav-link" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/add_director_to_movie.php">Add a Director to-Movie Relation</a>
+	    <a class="nav-link" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="/add_comment.php">Add a Comment</a>
+	    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
 	  </li>
 	</ul>
 
