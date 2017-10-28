@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<title>Movie Database Query System - Browse Actor </title>
 	<style>	
@@ -17,17 +20,17 @@
 	  </button>
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="./homepage.php">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="./update.php">Update</a>
+	      </li>
 	      <li class="nav-item active">
-	        <a class="nav-link" href="/homepage.php">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="./browse.php">Browse</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="/update.php">Update</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/browse.php">Browse</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="/search.php">Search</a>
+	        <a class="nav-link" href="./search.php">Search</a>
 	      </li>
 	    </ul>
 	  </div>

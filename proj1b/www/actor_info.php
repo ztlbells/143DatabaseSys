@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<title>Movie Database Query System - Search </title>
 	<style>	
@@ -73,7 +76,7 @@
 					mysql_select_db("CS143", $db_connection);
 					$actor = $_POST["actor"];
 					if(!$actor) $actor = $_GET["actor"];
-					echo 'actor:'.$actor;
+					//echo 'actor:'.$actor;
 					if($actor){
 						$query = "SELECT last, first, id, dob, dod FROM Actor WHERE id =".$actor.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
@@ -110,7 +113,7 @@
 							$role=$row[1];
 							$id=$row[2];
 							echo '<tr>';
-							echo '<td><a href="movie_info.php?movie='.$id.'">'.$title.'</a></td>';
+							echo '<td><a href=movie_info.php?movie='.$id.'>'.$title.'</a></td>';
 							echo '<td>'.$role.'</td>';
 							echo '</tr>';	
 						}												
