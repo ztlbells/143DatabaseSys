@@ -73,6 +73,7 @@
 					}
 					mysql_select_db("CS143", $db_connection);
 					$movie = $_POST["movie"];
+					if(!$movie) $movie = $_GET["movie"];
 					if($movie){
 						$query = "SELECT id, title, rating, company FROM Movie WHERE id =".$movie.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
@@ -99,7 +100,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actors in this Movie</h4></li>
+			<li class="nav-item"><h4>Actors</h4></li>
 			<?php
 				echo '<table>';
 				echo '<tr>';
@@ -107,7 +108,7 @@
 				echo '<th> Role </th>';
 				echo '</tr>';
 				if($movie){
-					$query='SELECT A.first, A.last, MA.role FROM Actor A, MovieActor MA WHERE MA.aid=A.id AND MA.mid='.$movie.';';
+					$query='SELECT A.first, A.last, MA.role, A.id FROM Actor A, MovieActor MA WHERE MA.aid=A.id AND MA.mid='.$movie.';';
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
 					for($i=0;$i<$row_number;$i++){
@@ -115,8 +116,9 @@
 						$first=$row[0];
 						$last=$row[1];
 						$role=$row[2];	
+						$id=$row[3];
 						echo '<tr>';
-						echo '<td>'.$first.' '.$last.'</td>';
+						echo '<td><a href="actor_info.php?actor='.$id.'">'.$first.' '.$last.'</a></td>';
 						echo '<td>'.$role.'</td>';
 						echo '</tr>';						
 					}
@@ -125,7 +127,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Reviews</h4></li>
+			<li class="nav-item"><h4>Reviews/Score</h4></li>
 			<?php
 				if($movie){
 					$query = 'SELECT AVG(rating), COUNT(*) FROM Review WHERE mid ='. $movie. ';';
@@ -168,6 +170,7 @@
 					$query = 'SELECT name, time, rating, comment FROM Review WHERE mid ='. $movie. ';';
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
+					if($row_number==0) echo 'No comments.';
 					for($i=0;$i<$row_number;$i++){
 						$row=mysql_fetch_row($rs);
 						$name=$row[0];

@@ -72,6 +72,8 @@
 					}
 					mysql_select_db("CS143", $db_connection);
 					$actor = $_POST["actor"];
+					if(!$actor) $actor = $_GET["actor"];
+					echo 'actor:'.$actor;
 					if($actor){
 						$query = "SELECT last, first, id, dob, dod FROM Actor WHERE id =".$actor.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
@@ -79,11 +81,11 @@
 						$first=$row[1];
 						$last=$row[0];
 						$id=$row[2];
-						$dob = $row[3];
-						$dod = $row[4];
+						$dob=$row[3];
+						$dod=$row[4];
 						echo '<li class="nav-item">Name:'.$first.' '.$last.'</li>';
 						echo '<li class="nav-item">Date of Birth:'.$dob.'</li>';
-						if(!$dob){
+						if(!$dod){
 							echo '<li class="nav-item">Date of Death: Still Alive </li>';
 						}
 						else echo '<li class="nav-item">Date of Death:'.$dob.'</li>';
@@ -91,7 +93,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actor's Movies and Role</h4></li>
+			<li class="nav-item"><h4>Actor's Movies and Roles</h4></li>
 			<?php
 				echo '<table>';
 				echo '<tr>';
@@ -99,15 +101,16 @@
 				echo '<th> Role </th>';
 				echo '</tr>';
 				if($actor){
-					$query="SELECT M.title, MA.role FROM Movie AS M, MovieActor AS MA WHERE M.id=MA.mid AND MA.aid=".$id.";";
+					$query="SELECT M.title, MA.role, M.id FROM Movie AS M, MovieActor AS MA WHERE M.id=MA.mid AND MA.aid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
 						$row_number=mysql_num_rows($rs);
 						for($i=0;$i<$row_number;$i++){
 							$row=mysql_fetch_row($rs);
 							$title=$row[0];
 							$role=$row[1];
+							$id=$row[2];
 							echo '<tr>';
-							echo '<td>'.$title.'</td>';
+							echo '<td><a href="movie_info.php?movie='.$id.'">'.$title.'</a></td>';
 							echo '<td>'.$role.'</td>';
 							echo '</tr>';	
 						}												
