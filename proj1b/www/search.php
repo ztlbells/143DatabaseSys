@@ -102,12 +102,16 @@
 	        $rs=mysql_query($sql_query, $db_connection) or die(mysql_error());
 	        if($rs){
 	        	echo '<li class="nav-item"><h4> Results in Movies </h4></li>';
-	        	echo '<table>';
-				echo '<tr>';
-				echo '<th> Title </th>';
-				echo '<th> Year </th>';
-				echo '</tr>';
-		    	$row_number=mysql_num_rows($rs);
+	        	$row_number=mysql_num_rows($rs);
+	        	if($row_number == 0)
+	        		echo 'No results.';
+	        	else{
+	        		echo '<table>';
+					echo '<tr>';
+					echo '<th> Title </th>';
+					echo '<th> Year </th>';
+					echo '</tr>';
+	        	}
 		    	for($i=0;$i<$row_number;$i++){
 					$row=mysql_fetch_row($rs);
 					$title=$row[0];
@@ -136,13 +140,17 @@
 				$rs=mysql_query($sql_query, $db_connection) or die(mysql_error());
 				if($rs){
 					echo '<li class="nav-item"><h4> Resutls in Actors </h4></li>';
-					echo '<table>';
-					echo '<tr>';
-					echo '<th> Actor </th>';
-					echo '<th> Date of Birth </th>';
-					echo '<th> Date of Death </th>';
-					echo '</tr>';
 					$row_number=mysql_num_rows($rs);
+					if($row_number == 0)
+						echo 'No results.';
+					else{
+						echo '<table>';
+						echo '<tr>';
+						echo '<th> Actor </th>';
+						echo '<th> Date of Birth </th>';
+						echo '<th> Date of Death </th>';
+						echo '</tr>';
+					}
 					for($i=0;$i<$row_number;$i++){
 						$row=mysql_fetch_row($rs);
 						$first=$row[0];
@@ -153,7 +161,8 @@
 						echo '<tr>';
 						echo '<td><a href="actor_info.php?actor='.$id.'">'.$first.' '.$last.'</a></td>';
 						echo '<td>'.$dob.'</td>';
-						echo '<td>'.$dod.'</td>';
+						if(!$dod) echo '<td> N/A </td>';
+						else echo '<td>'.$dod.'</td>';
 						echo '</tr>';						
 					}
 					echo '</table>';

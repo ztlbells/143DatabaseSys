@@ -98,28 +98,36 @@
 		<ul class="nav nav-tabs flex-column">
 			<li class="nav-item"><h4>Actor's Movies and Roles</h4></li>
 			<?php
-				echo '<table>';
-				echo '<tr>';
-				echo '<th> Movie Title </th>';
-				echo '<th> Role </th>';
-				echo '</tr>';
+
 				if($actor){
 					$query="SELECT M.title, MA.role, M.id FROM Movie AS M, MovieActor AS MA WHERE M.id=MA.mid AND MA.aid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
 						$row_number=mysql_num_rows($rs);
-						for($i=0;$i<$row_number;$i++){
-							$row=mysql_fetch_row($rs);
-							$title=$row[0];
-							$role=$row[1];
-							$id=$row[2];
+						if($row_number == 0){
+							echo 'No results.';
+						}
+						else{
+							echo '<table>';
 							echo '<tr>';
-							echo '<td><a href=movie_info.php?movie='.$id.'>'.$title.'</a></td>';
-							echo '<td>'.$role.'</td>';
-							echo '</tr>';	
-						}												
+							echo '<th> Movie Title </th>';
+							echo '<th> Role </th>';
+							echo '</tr>';
+							for($i=0;$i<$row_number;$i++){
+								$row=mysql_fetch_row($rs);
+								$title=$row[0];
+								$role=$row[1];
+								$id=$row[2];
+								echo '<tr>';
+								echo '<td><a href=movie_info.php?movie='.$id.'>'.$title.'</a></td>';
+								echo '<td>'.$role.'</td>';
+								echo '</tr>';	
+							}
+							echo '</table>';
+						}
+																		
 				}
 				mysql_close($db_connection); 
-				echo '</table>';
+				
 				
 			?>
 		</ul>

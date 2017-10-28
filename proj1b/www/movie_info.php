@@ -160,7 +160,7 @@
 							echo '<li class="nav-item">Average score: <font color="#800080">'.number_format($score,1).'/5 - Awesome</font> ('.$count.' people reviewed)</li>';
 						}
 						echo '<div class="form-group">';
-						echo '<button type="submit" name="movie" class="btn btn-primary" value="'.$movie.'">Leave your score as well!</button>';
+						echo '<button type="submit" name="movie" class="btn btn-primary" value="'.$movie.'">Leave your score & comment as well!</button>';
 						echo '</div>';
 					}
 				}
