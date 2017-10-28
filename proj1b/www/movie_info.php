@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<title>Movie Database Query System - Search </title>
 	<style>	
@@ -57,12 +60,13 @@
 
 <body>
 	<form method="post" action="add_comment.php">
+		<div class="form form-horizontal">
 		<input type="hidden" name="movie" value="<?php echo $_POST['movie']; ?>">
 		<ul class="nav nav-tabs flex-column">
 			<li class="nav-item"><h2>Movie Information Page</h2></li>
 		</ul >
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Movie Information is:</h4></li>
+			<li class="nav-item"><h4>Movie Information</h4></li>
 			<?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -72,6 +76,7 @@
 					}
 					mysql_select_db("CS143", $db_connection);
 					$movie = $_POST["movie"];
+					if(!$movie) $movie = $_GET["movie"];
 					if($movie){
 						$query = "SELECT id, title, rating, company FROM Movie WHERE id =".$movie.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
@@ -98,7 +103,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actors in this Movie:</h4></li>
+			<li class="nav-item"><h4>Actors</h4></li>
 			<?php
 				echo '<table>';
 				echo '<tr>';
@@ -106,7 +111,7 @@
 				echo '<th> Role </th>';
 				echo '</tr>';
 				if($movie){
-					$query='SELECT A.first, A.last, MA.role FROM Actor A, MovieActor MA WHERE MA.aid=A.id AND MA.mid='.$movie.';';
+					$query='SELECT A.first, A.last, MA.role, A.id FROM Actor A, MovieActor MA WHERE MA.aid=A.id AND MA.mid='.$movie.';';
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
 					for($i=0;$i<$row_number;$i++){
@@ -114,8 +119,9 @@
 						$first=$row[0];
 						$last=$row[1];
 						$role=$row[2];	
+						$id=$row[3];
 						echo '<tr>';
-						echo '<td>'.$first.' '.$last.'</td>';
+						echo '<td><a href="actor_info.php?actor='.$id.'">'.$first.' '.$last.'</a></td>';
 						echo '<td>'.$role.'</td>';
 						echo '</tr>';						
 					}
@@ -124,7 +130,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>User Review:</h4></li>
+			<li class="nav-item"><h4>Reviews/Score</h4></li>
 			<?php
 				if($movie){
 					$query = 'SELECT AVG(rating), COUNT(*) FROM Review WHERE mid ='. $movie. ';';
@@ -138,7 +144,21 @@
 						echo '</div>';
 					}
 					else{
-						echo '<li class="nav-item">Average score for this Movie is '.$score.'/5 based on '.$count.' people\'s reviews</li>';
+						if($score > 0 && $score <= 1){
+							echo '<li class="nav-item">Average score: <font color="#B0C4DE">'.number_format($score,1).'/5 - Waste of time</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 1 && $score <= 2){
+							echo '<li class="nav-item">Average score: <font color="#778899">'.number_format($score,1).'/5 - Just so-so</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 2 && $score <= 3){
+							echo '<li class="nav-item">Average score: <font color="#87CEFA">'.number_format($score,1).'/5 - Okay</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 3 && $score <= 4){
+							echo '<li class="nav-item">Average score: <font color="#9370DB">'.number_format($score,1).'/5 - Not bad</font> ('.$count.' people reviewed)</li>';
+						}
+						if($score > 4 && $score <= 5){
+							echo '<li class="nav-item">Average score: <font color="#800080">'.number_format($score,1).'/5 - Awesome</font> ('.$count.' people reviewed)</li>';
+						}
 						echo '<div class="form-group">';
 						echo '<button type="submit" name="movie" class="btn btn-primary" value="'.$movie.'">Leave your score as well!</button>';
 						echo '</div>';
@@ -147,19 +167,25 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Comment details shown below :</h4></li>
+			<li class="nav-item"><h4>Comments:</h4></li>
 			<?php
 				if($movie){
 					$query = 'SELECT name, time, rating, comment FROM Review WHERE mid ='. $movie. ';';
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
+					if($row_number==0) echo 'No comments.';
 					for($i=0;$i<$row_number;$i++){
 						$row=mysql_fetch_row($rs);
 						$name=$row[0];
 						$time=$row[1];
 						$rating=$row[2];
 						$comment=$row[3];
-						echo '<li class="nav-item"><font color="#FF0000">'.$name.'</font>'.' rates the this movie with score '. $rating. ' and left a review at '.$time.'</li>';
+						if(!$name){
+							echo '<li class="nav-item"><font color="#1E90FF"> Guest </font>'.' rates the this movie with score '. $rating. '/5 and left a review at '.$time.'</li>';
+						}
+						else{
+							echo '<li class="nav-item"><font color="#1E90FF">'.$name.'</font>'.' rates the this movie with score '. $rating. ' and left a review at '.$time.'</li>';
+						}
 						echo '<li class="nav-item">Comment:</li>';
 						echo '<li class="nav-item">'.$comment.'</li>';
 						echo '</br>';
@@ -167,6 +193,7 @@
 				}
 			?>
 		</ul>
+	</div>
 	</form>
 </body>
 </html>
