@@ -57,6 +57,7 @@
 
 <body>
 	<form method="post" action="add_comment.php">
+		<div class="form form-horizontal">
 		<input type="hidden" name="movie" value="<?php echo $_POST['movie']; ?>">
 		<ul class="nav nav-tabs flex-column">
 			<li class="nav-item"><h2>Movie Information Page</h2></li>
@@ -186,6 +187,7 @@
 				}
 			?>
 		</ul>
+	</div>
 	</form>
 </body>
 </html>

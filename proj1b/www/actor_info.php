@@ -56,7 +56,8 @@
 </head>
 
 <body>
-		<input type="hidden" name="actor" value="<?php echo $_POST['actorOpt']; ?>">
+	<form>
+		<div class="form form-horizontal">
 		<ul class="nav nav-tabs flex-column">
 			<li class="nav-item"><h2>Actor Information Page</h2></li>
 		</ul >
@@ -97,23 +98,26 @@
 				echo '<th> Movie Title </th>';
 				echo '<th> Role </th>';
 				echo '</tr>';
-				if($movie){
-					$query="SELECT title, role FROM Moive M, MovieActor MA WHERE M.id=MA.mid AND MD.aid=".$id.";";
+				if($actor){
+					$query="SELECT M.title, MA.role FROM Movie AS M, MovieActor AS MA WHERE M.id=MA.mid AND MA.aid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
-						while($row = mysql_fetch_row($rs)) {
+						$row_number=mysql_num_rows($rs);
+						for($i=0;$i<$row_number;$i++){
+							$row=mysql_fetch_row($rs);
 							$title=$row[0];
 							$role=$row[1];
 							echo '<tr>';
 							echo '<td>'.$title.'</td>';
 							echo '<td>'.$role.'</td>';
 							echo '</tr>';	
-						}							
-					}
+						}												
 				}
+				mysql_close($db_connection); 
 				echo '</table>';
-			mysql_close($db_connection); 
+				
 			?>
 		</ul>
+	</div>
 	</form>
 </body>
 </html>

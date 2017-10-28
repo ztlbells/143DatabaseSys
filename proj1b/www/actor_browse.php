@@ -37,12 +37,13 @@
 <body>
 	<p></br></p>
 	<form method="post" action="actor_info.php">
+		
 		<div class="form form-horizontal">
 		<h1>Browse Actors</h1>
 
 		<div class="form-group d-flex flex-column">
 			<label for id = "actor" class="control-label">Select an Actor</label>
-			 <select id = "actor" name="actorOpt" class="custom-select">
+			 <select id = "actor" name="actor" class="custom-select">
 			 <?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
