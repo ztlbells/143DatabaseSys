@@ -119,10 +119,10 @@
 			$rs_add_id = mysql_query($query_add_id, $db_connection) or die(mysql_error());
 			
 			if($dateOfDeath){
-				$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."','".$dateOfDeath."');";
+				$query = "INSERT INTO Director VALUES(".$id.",'".$lastName."','".$firstName."','".$dateOfBirth."','".$dateOfDeath."');";
 			}
 			else{
-				$query = "INSERT INTO Actor VALUES(".$id.",'".$lastName."','".$firstName."','".$gender."','".$dateOfBirth."',NULL);";
+				$query = "INSERT INTO Director VALUES(".$id.",'".$lastName."','".$firstName."','".$dateOfBirth."',NULL);";
 			}
 			
 			$rs = mysql_query($query, $db_connection) or die(mysql_error());

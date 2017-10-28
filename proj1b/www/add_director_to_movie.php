@@ -86,10 +86,11 @@
 					$row_number=mysql_num_rows($rs);
 					echo '<option value="0" selected="selected"> </option>';
 					for($i=1;$i<=$row_number;$i++){
-						$first=mysql_fetch_row($rs)[0];
-						$last=mysql_fetch_row($rs)[1];
-						$dob=mysql_fetch_row($rs)[2];
-						$id=mysql_fetch_row($rs)[3];
+						$row=mysql_fetch_row($rs);
+						$first=$row[0];
+						$last=$row[1];
+						$dob=$row[2];
+						$id=$row[3];
 						echo '<option value="'.$id.'">'.$first.' '.$last.' ('.$dob.')'.'</option>';
 					}
 					mysql_close($db_connection); 
