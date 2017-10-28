@@ -54,7 +54,7 @@
 						exit(1);
 					}
 					mysql_select_db("CS143", $db_connection);
-					$query="SELECT title,year,id FROM Movie ORDER BY title ASC";
+					$query="SELECT title,year,id FROM Movie ORDER BY year DESC";
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
 					$row_number=mysql_num_rows($rs);
 					echo '<option value="0" selected="selected"> </option>';
