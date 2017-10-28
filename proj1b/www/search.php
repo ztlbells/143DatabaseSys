@@ -78,10 +78,10 @@
 	<form method="GET" action="<?php $_PHP_SELF?>">
 		<div class="form form-horizontal">
 		<div class="form-group">
-		    <label for="searchtxt">I'm looking for ..</label>
+		    <label for="searchtxt">I'm looking for ...</label>
 		    <input type="text" class="form-control" id="searchtxt" name = "search" value="<?php if(isset($_GET["search"])) echo $_GET["search"]; ?>" />  
 		 <br />  
-            <input type="submit" name="submit" class="btn btn-info" />  
+            <input type="submit" name="submit" value="submit" class="btn btn-info">
 	  	</div>
 	</form>
 
