@@ -46,7 +46,8 @@
 
 		<div class="form-group d-flex flex-column">
 			<label for id = "actor" class="control-label">Select an Actor</label>
-			 <select id = "actor" name="actor" class="custom-select">
+			 <select id = "actor" name="actor" class="custom-select" aria-describedby="nametip">
+			 <small id="nametip" class="form-text text-muted">Please wait patiently for loading options..</small>
 			 <?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
