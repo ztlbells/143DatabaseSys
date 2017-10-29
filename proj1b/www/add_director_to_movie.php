@@ -38,11 +38,32 @@
 
 </head>
 <body>
-	<p></br></p>
-	<form>
-		<div class="form form-horizontal">
-		<h1>Add a Director to a Movie</h1>
+<ul class="nav nav-tabs">
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_actor.php">Add an Actor</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_director.php">Add a Director</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link  active" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
+		  </li>
+		</ul>
 
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Add a Director to a Movie</h1>	
+	<form>
+		<div class="form">
 		<div class="form-group d-flex flex-column">
 			<label for id = "movietitle" class="control-label">Movie Title</label>
 			 <select id = "movietitle" name="movietitle" class="custom-select">
@@ -126,7 +147,8 @@
 		
 		mysql_close($db_connection); 
 	?>
-
+	</div>
+</div>
 	
 </body>
 </html>

@@ -34,14 +34,17 @@
 </head>
 <body>
 
-	<ul class="nav nav-tabs flex-column">
-	  <li class="nav-item">
-	    <a class="nav-link active" href="./actor_browse.php">Actors</a>
-	  </li>
-	  <li class="nav-item">
+	<nav class="nav nav-pills nav-justified">
+	    <a class="nav-link" href="./actor_browse.php">Actors</a>
 	    <a class="nav-link" href="./movie_browse.php">Movies</a>
-	  </li>
-	</ul>
+	</nav>
+
+	<div class="jumbotron">
+	  <h1 class="display-3">Browse</h1>
+	  <p class="lead">Browse Movie Database Query System.</p>
+	  <hr class="my-4">
+	  <p>You can browse actor/director/movie information:)</p>
+	</div>
 
 	<?php
 			

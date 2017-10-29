@@ -74,14 +74,16 @@
 	</nav>
 </head>
 <body>
-	<p></br></p>
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Search</h1>
 	<form method="GET" action="<?php $_PHP_SELF?>">
-		<div class="form form-horizontal">
+		<div class="form">
 		<div class="form-group">
 		    <label for="searchtxt">I'm looking for ...</label>
 		    <input type="text" class="form-control" id="searchtxt" name = "search" value="<?php if(isset($_GET["search"])) echo $_GET["search"]; ?>" />  
 		 <br />  
-            <input type="submit" name="submit" value="submit" class="btn btn-info">
+            <input type="submit" name="submit" value="Submit" class="btn btn-info">
 	  	</div>
 	</form>
 
@@ -101,16 +103,18 @@
 	        $sql_query = "SELECT title, year,id FROM Movie WHERE " . $condition. ";";  
 	        $rs=mysql_query($sql_query, $db_connection) or die(mysql_error());
 	        if($rs){
-	        	echo '<li class="nav-item"><h4> Results in Movies </h4></li>';
+	        	echo '<li class="nav-item"><h3> Results in Movies </h3></li>';
 	        	$row_number=mysql_num_rows($rs);
 	        	if($row_number == 0)
 	        		echo 'No results.';
 	        	else{
-	        		echo '<table>';
+	        		echo '<table class="table table-bordered">';
+					echo '<thead>';
 					echo '<tr>';
 					echo '<th> Title </th>';
 					echo '<th> Year </th>';
 					echo '</tr>';
+					echo '</thead>';
 	        	}
 		    	for($i=0;$i<$row_number;$i++){
 					$row=mysql_fetch_row($rs);
@@ -122,7 +126,9 @@
 					echo '<td>'.$year.'</td>';
 					echo '</tr>';						
 			  	}
+			  	echo '</tbody>';
 			  	echo '</table>';
+			  	echo '<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>';
 	        }
 			
 			$actor_condition = '';
@@ -139,17 +145,20 @@
 				$sql_query = "SELECT first, last, id, dob, dod FROM Actor WHERE " . $actor_condition. ";"; 
 				$rs=mysql_query($sql_query, $db_connection) or die(mysql_error());
 				if($rs){
-					echo '<li class="nav-item"><h4> Resutls in Actors </h4></li>';
+					echo '<li class="nav-item"><h3> Resutls in Actors </h3></li>';
 					$row_number=mysql_num_rows($rs);
 					if($row_number == 0)
 						echo 'No results.';
 					else{
-						echo '<table>';
+						echo '<table class="table table-bordered">';
+						echo '<thead>';
 						echo '<tr>';
 						echo '<th> Actor </th>';
 						echo '<th> Date of Birth </th>';
 						echo '<th> Date of Death </th>';
 						echo '</tr>';
+						echo '</thead>';
+						echo '<tbody>';
 					}
 					for($i=0;$i<$row_number;$i++){
 						$row=mysql_fetch_row($rs);
@@ -165,13 +174,16 @@
 						else echo '<td>'.$dod.'</td>';
 						echo '</tr>';						
 					}
+					echo '</tbody>';
 					echo '</table>';
+					echo '<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>';
 				}
 			}            
 	    }  
 		?>  
 	    </ul>  
-    </div>  
+    	</div>  
+	</div>
 </div>
 </body>
 </html>

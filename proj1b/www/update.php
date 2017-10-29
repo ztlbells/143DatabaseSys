@@ -31,27 +31,21 @@
 </head>
 <body>
 
-	<ul class="nav nav-tabs flex-column">
-	  <li class="nav-item">
-	    <a class="nav-link active" href="./add_actor.php">Add an Actor</a>
-	  </li>
-	  <li class="nav-item">
+	<nav class="nav nav-pills nav-justified">
+	    <a class="nav-link" href="./add_actor.php">Add an Actor</a>
 	    <a class="nav-link" href="./add_director.php">Add a Director</a>
-	  </li>
-	  <li class="nav-item">
 	    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
-	  </li>
-	  <li class="nav-item">
 	    <a class="nav-link" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
-	  </li>
-	  <li class="nav-item">
 	    <a class="nav-link" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
-	  </li>
-	  <li class="nav-item">
 	    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
-	  </li>
-	</ul>
+	</nav>
 
+	<div class="jumbotron">
+	  <h1 class="display-3">Update</h1>
+	  <p class="lead">Update Movie Database Query System.</p>
+	  <hr class="my-4">
+	  <p>You can add an actor/director/movie, relations and leave your comments:)</p>
+	</div>
 
 	<?php
 			

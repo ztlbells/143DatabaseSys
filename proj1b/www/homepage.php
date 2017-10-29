@@ -33,7 +33,15 @@
 
 </head>
 <body>
-
+	<div class="jumbotron">
+	  <h1 class="display-3">Welcome</h1>
+	  <p class="lead">Welcome to Movie Database Query System.</p>
+	  <hr class="my-4">
+	  <p>You can update, browse and search actor/actress/movie information.</p>
+	  <p class="lead">
+	    <a class="btn btn-primary btn-lg" href="https://github.com/ztlbells/LetsMovie" role="button">Github</a>
+	  </p>
+	</div>
 
 	<?php
 			

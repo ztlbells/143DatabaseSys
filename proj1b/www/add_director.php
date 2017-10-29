@@ -38,10 +38,35 @@
 
 </head>
 <body>
-	<form method="GET" action="<?php $_PHP_SELF?>">
+
+		<ul class="nav nav-tabs">
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_actor.php">Add an Actor</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link active" href="./add_director.php">Add a Director</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
+		  </li>
+		</ul>
+
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Add a Director</h1>
+	    <form method="GET" action="<?php $_PHP_SELF?>">
 		<p></br></p>
-		<div class="form form-horizontal">
-		<h1>Add a Director</h1>
+		<div class="form">
+		<h1></h1>
 		<div class="row">
 		    <div class="col">
 		       <div class="form-group">
@@ -130,6 +155,10 @@
 			mysql_close($db_connection);
 		}		
 	?>
+	  </div>
+	</div>
+
+	
 
 	
 </body>

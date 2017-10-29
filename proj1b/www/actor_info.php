@@ -59,13 +59,12 @@
 </head>
 
 <body>
+	<div class="jumbotron">
+	  <h1 class="display-3">Actor Information Page</h1>
 	<form>
-		<div class="form form-horizontal">
+		<div class="form">
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h2>Actor Information Page</h2></li>
-		</ul >
-		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actor Information</h4></li>
+			<li class="nav-item"><h3>Actor Information</h3></li>
 			<?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -86,17 +85,17 @@
 						$id=$row[2];
 						$dob=$row[3];
 						$dod=$row[4];
-						echo '<li class="nav-item">Name:'.$first.' '.$last.'</li>';
-						echo '<li class="nav-item">Date of Birth:'.$dob.'</li>';
+						echo '<li class="nav-item">Name: '.$first.' '.$last.'</li>';
+						echo '<li class="nav-item">Date of Birth: '.$dob.'</li>';
 						if(!$dod){
-							echo '<li class="nav-item">Date of Death: Still Alive </li>';
+							echo '<li class="nav-item">Date of Death:  Still Alive </li>';
 						}
-						else echo '<li class="nav-item">Date of Death:'.$dob.'</li>';
+						else echo '<li class="nav-item">Date of Death: '.$dob.'</li>';
 					}
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actor's Movies and Roles</h4></li>
+			<li class="nav-item"><h3>Actor's Movies and Roles</h3></li>
 			<?php
 
 				if($actor){
@@ -107,11 +106,14 @@
 							echo 'No results.';
 						}
 						else{
-							echo '<table>';
+							echo '<table class="table table-bordered">';
+							echo '<thead>';
 							echo '<tr>';
 							echo '<th> Movie Title </th>';
 							echo '<th> Role </th>';
 							echo '</tr>';
+							echo '</thead>';
+							echo '<tbody>';
 							for($i=0;$i<$row_number;$i++){
 								$row=mysql_fetch_row($rs);
 								$title=$row[0];
@@ -122,6 +124,7 @@
 								echo '<td>'.$role.'</td>';
 								echo '</tr>';	
 							}
+							echo '</tbody>';
 							echo '</table>';
 						}
 																		
@@ -133,5 +136,6 @@
 		</ul>
 	</div>
 	</form>
+</div>
 </body>
 </html>

@@ -59,14 +59,13 @@
 </head>
 
 <body>
+	<div class="jumbotron">
+	  <h1 class="display-3">Movie Information Page</h1>
 	<form method="post" action="add_comment.php">
-		<div class="form form-horizontal">
+		<div class="form">
 		<input type="hidden" name="movie" value="<?php echo $_POST['movie']; ?>">
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h2>Movie Information Page</h2></li>
-		</ul >
-		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Movie Information</h4></li>
+			<li class="nav-item"><h3>Movie Information</h3></li>
 			<?php
 					$db_connection = mysql_connect("localhost", "cs143", "");
 					if(!$db_connection){
@@ -85,31 +84,34 @@
 						$title=$row[1];
 						$rating=$row[2];
 						$company=$row[3];
-						echo '<li class="nav-item">Title:'.$title.'</li>';
-						echo '<li class="nav-item">Producer:'.$company.'</li>';
-						echo '<li class="nav-item">MPAA Rating:'.$rating.'</li>';
+						echo '<li class="nav-item">Title: '.$title.'</li>';
+						echo '<li class="nav-item">Producer: '.$company.'</li>';
+						echo '<li class="nav-item">MPAA Rating: '.$rating.'</li>';
 						$query="SELECT first,last FROM Director D, MovieDirector MD WHERE D.id=MD.did AND MD.mid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
 						$row=mysql_fetch_row($rs);
 						$first=$row[0];
 						$last=$row[1];
-						echo '<li class="nav-item">Director:'.$first.' '.$last.'</li>';
+						echo '<li class="nav-item">Director: '.$first.' '.$last.'</li>';
 						$query="SELECT genre FROM MovieGenre WHERE mid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
 						$row=mysql_fetch_row($rs);
 						$genre=$row[0];
-						echo '<li class="nav-item">Genre:'.$genre.'</li>';
+						echo '<li class="nav-item">Genre: '.$genre.'</li>';
 					}
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Actors</h4></li>
+			<li class="nav-item"><h3>Actors</h3></li>
 			<?php
-				echo '<table>';
+				echo '<table class="table table-bordered">';
+				echo '<thead>';
 				echo '<tr>';
 				echo '<th> Name </th>';
 				echo '<th> Role </th>';
 				echo '</tr>';
+				echo '</thead>';
+				echo '<tbody>';
 				if($movie){
 					$query='SELECT A.first, A.last, MA.role, A.id FROM Actor A, MovieActor MA WHERE MA.aid=A.id AND MA.mid='.$movie.';';
 					$rs=mysql_query($query, $db_connection) or die(mysql_error());
@@ -126,11 +128,12 @@
 						echo '</tr>';						
 					}
 				}
+				echo '</tbody>';
 				echo '</table>';
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Reviews/Score</h4></li>
+			<li class="nav-item"><h3>Reviews/Score</h3></li>
 			<?php
 				if($movie){
 					$query = 'SELECT AVG(rating), COUNT(*) FROM Review WHERE mid ='. $movie. ';';
@@ -167,7 +170,7 @@
 			?>
 		</ul>
 		<ul class="nav nav-tabs flex-column">
-			<li class="nav-item"><h4>Comments:</h4></li>
+			<li class="nav-item"><h3>Comments:</h3></li>
 			<?php
 				if($movie){
 					$query = 'SELECT name, time, rating, comment FROM Review WHERE mid ='. $movie. ';';
@@ -195,5 +198,6 @@
 		</ul>
 	</div>
 	</form>
+</div>
 </body>
 </html>

@@ -59,12 +59,20 @@
 
 </head>
 <body>
-	<p></br></p>
-	<form method="post" action="movie_info.php">
-		<div class="form form-horizontal">
-		<h1>Browse Movies</h1>
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link" href="./actor_browse.php">Actors</a>
+	  </li>
+	  <li class="nav-item active">
+	    <a class="nav-link  active" href="./movie_browse.php">Movies</a>
+	  </li>
+	</ul>
 
-		<!-- TODO: Options are returned from sql, Lexicographical order??-->
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Browse Movies</h1>
+	<form method="post" action="movie_info.php">
+		<div class="form">
 		<div class="form-group d-flex flex-column">
 			<label for id = "movie" class="control-label">Select a Movie</label>
 			 <select id = "movie" name="movie" class="custom-select">
@@ -102,7 +110,8 @@
 	<?php
 			
 	?>
-
+	</div>
+</div>
 	
 </body>
 </html>

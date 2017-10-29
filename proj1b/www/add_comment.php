@@ -38,11 +38,33 @@
 
 </head>
 <body>
-	<p></br></p>
+		<ul class="nav nav-tabs">
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_actor.php">Add an Actor</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_director.php">Add a Director</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link  active" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
+		  </li>
+		</ul>
+
+	<div class="jumbotron jumbotron-fluid">
+	  <div class="container">
+	    <h1 class="display-3">Add a comment</h1>
 	<form method="GET" action="<?php $_PHP_SELF?>">
 		<input type="hidden" name="movie" value="<?php echo $_POST['movie']; ?>">
-		<div class="form form-horizontal">
-		<h1>Add a comment</h1>
+		<div class="form">
 
 
 		<div class="form-group d-flex flex-column">
@@ -108,9 +130,10 @@
 		
 		<label for id="comment" class="control-label">Comment</label>
 		<div>
-			<textarea id="comment" name="comment" rows=5 cols=40></textarea>
+			<textarea class="form-control" id="comment" name="comment" rows=5 cols=40></textarea>
 		</div>
 		
+		<p></br></p>
 	  	<div class="form-group">
 	  		<button type="submit" class="btn btn-primary">Submit</button>
 	  	</div>
@@ -144,7 +167,8 @@
 		
 		mysql_close($db_connection); 
 	?>
-
+	</div>
+</div>
 	
 </body>
 </html>
