@@ -95,8 +95,13 @@
 						echo '<li class="nav-item">Director: '.$first.' '.$last.'</li>';
 						$query="SELECT genre FROM MovieGenre WHERE mid=".$id.";";
 						$rs=mysql_query($query, $db_connection) or die(mysql_error());
-						$row=mysql_fetch_row($rs);
-						$genre=$row[0];
+						$row_number=mysql_num_rows($rs);
+						$genre = '';
+						for($i = 0; $i < $row_number; $i++){
+							$row=mysql_fetch_row($rs);
+							$genre .= $row[0].', ';
+						}
+						$genre = substr($genre, 0, -2); 
 						echo '<li class="nav-item">Genre: '.$genre.'</li>';
 					}
 			?>

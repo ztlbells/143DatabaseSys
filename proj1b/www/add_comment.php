@@ -49,13 +49,13 @@
 		    <a class="nav-link" href="./add_movie.php">Add a Movie</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link  active" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
+		    <a class="nav-link" href="./add_actor_to_movie.php">Add an Actor-to-Movie Relation</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link" href="./add_director_to_movie.php">Add a Director to-Movie Relation</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link" href="./add_comment.php">Add a Comment</a>
+		    <a class="nav-link   active" href="./add_comment.php">Add a Comment</a>
 		  </li>
 		</ul>
 
